@@ -1,13 +1,15 @@
 const jwt = require('jsonwebtoken')
-const { PRIVATE_KEY } = require('../config')
+const { ACCESS_TOKEN_SECRET } = require('../config')
 
-function verifyJWT(req, res, next) {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    jwt.verify(req.headers.authorization.split(' ')[1], PRIVATE_KEY, (err, decode) => {
-      if (err) req.user = undefined
+async function verifyJWT(req, res, next) {
+  if (req.headers?.authorization?.split(' ')[0] === 'Bearer') {
+    try {
+      const decode = await jwt.verify(req.headers.authorization.split(' ')[1], ACCESS_TOKEN_SECRET)
       req.user = decode
-      next()
-    })
+    } catch (err) {
+      req.user = undefined
+    }
+    next()
   } else {
     req.user = undefined
     next()

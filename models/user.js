@@ -16,12 +16,8 @@ const UserShema = new Schema({
   },
   hash_password: {
     type: String
-  },
-  created: {
-    type: Date,
-    default: Date.now
   }
-}, { versionKey: false })
+}, { versionKey: false, timestamps: true })
 
 UserShema.methods.comparePassword = function(password) {
   return bcrypt.compareSync(password, this.hash_password)
