@@ -17,8 +17,8 @@ router.post('/register', async (req, res) => {
     user.hash_password = undefined
 
     return res.json(user)
-  } catch (err) {
-    return res.status(400).send({ message: err })
+  } catch (error) {
+    return res.status(400).send({ error })
   }
 })
 
@@ -38,8 +38,8 @@ router.post('/token',  async (req, res) => {
 
       return res.json({ access, refresh })
     }
-  } catch (err) {
-    return res.status(400).json({ message: err })
+  } catch (error) {
+    return res.status(400).json({ error })
   }
 })
 
@@ -61,8 +61,8 @@ router.post('/refresh', async (req, res) => {
     await refreshToken.save()
 
     return res.json({ access, refresh })
-  } catch (err) {
-    return res.status(400).json({ message: err })
+  } catch (error) {
+    return res.status(400).json({ error })
   }
 })
 
